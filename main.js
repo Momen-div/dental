@@ -201,7 +201,12 @@
   }
 
   function validatePhone(value) {
-    const digits = value.replace(/\D/g, "");
+    const normalizedValue = value.replace(/[\u0660-\u0669\u06F0-\u06F9]/g, (digit) => {
+      const codePoint = digit.charCodeAt(0);
+      const zeroCodePoint = codePoint >= 0x06F0 ? 0x06F0 : 0x0660;
+      return String(codePoint - zeroCodePoint);
+    });
+    const digits = normalizedValue.replace(/\D/g, "");
     return digits.length >= 7 && digits.length <= 15;
   }
 
@@ -265,29 +270,11 @@
     return valid;
   }
 
-  async function sendRequest(type, payload) {
-    const api = config.api;
-    if (!api.enabled) {
-      await new Promise((resolve) => window.setTimeout(resolve, 450));
-      return { demo: true };
-    }
-    const endpoint = type === "booking" ? api.appointmentsEndpoint : api.contactEndpoint;
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify(payload)
-    });
-    if (!response.ok) throw new Error(`Request failed: ${response.status}`);
-    return response.json();
-  }
-
-  async function handleFormSubmit(event) {
+  function handleFormSubmit(event) {
     event.preventDefault();
     const form = event.currentTarget;
     const type = form.dataset.demoForm;
     const status = form.querySelector(".form-status");
-    const button = form.querySelector("[type=submit]");
-    if (button.disabled) return;
     clearErrors(form);
     const valid = type === "booking" ? validateBooking(form) : validateContact(form);
     if (!valid) {
@@ -296,21 +283,7 @@
       form.querySelector('[aria-invalid="true"]')?.focus();
       return;
     }
-    const payload = Object.fromEntries(new FormData(form).entries());
-    button.disabled = true;
-    button.textContent = text("processing");
-    try {
-      const result = await sendRequest(type, payload);
-      status.textContent = result.demo
-        ? text(type === "booking" ? "bookingSuccess" : "contactSuccess")
-        : (result.message || text(type === "booking" ? "bookingSuccess" : "contactSuccess"));
-    } catch (error) {
-      status.textContent = text(type === "booking" ? "bookingError" : "contactError");
-      status.classList.add("is-error");
-    } finally {
-      button.disabled = false;
-      button.textContent = text(type === "booking" ? "submitBooking" : "submitMessage");
-    }
+    status.textContent = text(type === "booking" ? "bookingSuccess" : "contactSuccess");
   }
 
   function updateFormStatusLanguage() {
@@ -343,7 +316,12 @@
     };
     toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
     navigation.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setOpen(false)));
-    document.addEventListener("keydown", (event) => { if (event.key === "Escape") setOpen(false); });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
   }
 
   function setupLightbox() {
@@ -387,7 +365,7 @@
     field.addEventListener("input", () => clearFieldError(field));
     field.addEventListener("change", () => clearFieldError(field));
   });
-  document.querySelectorAll(".gallery-item img, #dentist-image").forEach((image) => {
+  document.querySelectorAll(".gallery-item img, #dentist-image, [data-clinic-image='hero']").forEach((image) => {
     image.addEventListener("error", () => image.classList.add("image-failed"), { once: true });
   });
   document.querySelector("#current-year").textContent = new Date().getFullYear();

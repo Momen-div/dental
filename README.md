@@ -28,7 +28,7 @@ Edit [config.js](config.js) before publishing:
 - Brand colors and typography can be adjusted in the CSS custom properties at the top of [style.css](style.css).
 - Keep Arabic/English interface copy in [translations.js](translations.js), including service names and descriptions.
 
-The appointment and contact forms run in **demo mode**: validation and loading/success UI are functional, but no data is transmitted or persisted. Demo feedback explicitly tells visitors that the clinic has not received the request. Do not enable real submissions until a backend is implemented and reviewed.
+The appointment and contact forms are **frontend-only previews**. They validate input locally and explain that nothing is sent, received, or saved. The project contains no form submission endpoint or persistence layer.
 
 ## Deployment
 
@@ -53,6 +53,6 @@ server/
     └── db/
 ```
 
-The client-side integration points are `api.enabled`, `api.appointmentsEndpoint` (`POST /api/appointments`), and `api.contactEndpoint` (`POST /api/contact`) in [config.js](config.js). They are intentionally disabled. No server, database, appointment persistence, email delivery, or API credential is included in this deliverable.
+There is no client-side API integration in this project. No server, database, appointment persistence, email delivery, or API credential is included in this deliverable.
 
 Before enabling this integration, the backend must validate and sanitize input, enforce server-side date/service rules, rate-limit submissions, apply security headers, use parameterized PostgreSQL queries, keep credentials in environment variables, handle database failures, and establish appropriate access controls and privacy safeguards. Document the required environment variables in `.env.example` without real secrets. Review local privacy, consent, retention, and applicable healthcare data obligations before collecting any real patient information.

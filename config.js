@@ -69,11 +69,6 @@ window.CLINIC_CONFIG = {
     openingDays: [0, 1, 2, 3, 4, 6], // JavaScript day numbers: 0 Sunday … 6 Saturday. Verify with the clinic.
     availableTimes: ["09:00", "10:00", "11:00", "12:00", "14:00", "15:00", "16:00"]
   },
-  api: {
-    enabled: false, // Keep false until a secure backend and persistence layer are configured.
-    appointmentsEndpoint: "/api/appointments",
-    contactEndpoint: "/api/contact"
-  },
   social: {
     instagram: "",
     facebook: "",
