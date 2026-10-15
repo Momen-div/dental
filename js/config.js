@@ -1,17 +1,23 @@
-/* Clinic customization lives here. Replace placeholders and verify every service before publication. */
-window.CLINIC_CONFIG = {
+/*
+ * Clinic-specific settings.
+ * Replace the placeholders with information verified by the clinic before publishing.
+ */
+const clinicConfig = {
   clinicName: { ar: "عيادة الأسنان", en: "Dental Care" },
   contact: {
     phone: "", // Add a verified clinic phone, e.g. +962…
     whatsapp: "", // Add an international-format number without spaces
     email: "",
-    address: { ar: "أضف عنوان العيادة المعتمد", en: "Add the verified clinic address" },
+    address: {
+      ar: "أضف عنوان العيادة المعتمد",
+      en: "Add the verified clinic address"
+    },
     hours: {
       ar: "يرجى التواصل للاستفسار عن ساعات العمل",
       en: "Please contact the clinic to confirm opening hours"
     }
   },
-  mapEmbedUrl: "https://www.google.com/maps?q=Amman%2C%20Jordan&output=embed", // Demonstration only; replace with the real clinic map embed URL.
+  mapEmbedUrl: "https://www.google.com/maps?q=Amman%2C%20Jordan&output=embed", // Demonstration only; replace with the actual clinic map.
   images: {
     hero: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1600&q=90",
     gallery: [
@@ -66,7 +72,7 @@ window.CLINIC_CONFIG = {
   ],
   booking: {
     phoneCountryCode: "+962",
-    openingDays: [0, 1, 2, 3, 4, 6], // JavaScript day numbers: 0 Sunday … 6 Saturday. Verify with the clinic.
+    openingDays: [0, 1, 2, 3, 4, 6], // JavaScript weekday numbers: Sunday = 0, Saturday = 6.
     availableTimes: ["09:00", "10:00", "11:00", "12:00", "14:00", "15:00", "16:00"]
   },
   social: {
@@ -75,3 +81,5 @@ window.CLINIC_CONFIG = {
     linkedin: ""
   }
 };
+
+export default clinicConfig;

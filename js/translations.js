@@ -1,5 +1,5 @@
-/* All interface copy is centralized here so every section switches together. */
-window.TRANSLATIONS = {
+/* Arabic and English interface copy, kept separate from application logic. */
+const translations = {
   ar: {
     documentTitle: "عيادة الأسنان | رعاية تليق بابتسامتك",
     description: "رعاية أسنان مخصصة في أجواء هادئة. استكشف الخدمات واطلب موعداً للتواصل مع العيادة.",
@@ -37,3 +37,5 @@ window.TRANSLATIONS = {
     timeLabels: { "09:00": "9:00 AM", "10:00": "10:00 AM", "11:00": "11:00 AM", "12:00": "12:00 PM", "14:00": "2:00 PM", "15:00": "3:00 PM", "16:00": "4:00 PM" }
   }
 };
+
+export default translations;
