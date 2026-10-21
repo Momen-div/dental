@@ -10,19 +10,35 @@ const adminAppointmentsRouter = require("./routes/admin-appointments");
 const SQLiteSessionStore = require("./auth/sqlite-session-store");
 const { isAdministrator } = require("./auth/security");
 
+
 const app = express();
 app.disable("x-powered-by");
-if (process.env.TRUST_PROXY) app.set("trust proxy", process.env.TRUST_PROXY);
+
+if (process.env.TRUST_PROXY) {
+  app.set("trust proxy", process.env.TRUST_PROXY);
+}
+
 const PORT = process.env.PORT || 3000;
 const projectRoot = path.join(__dirname, "..");
 
+console.log("Proxy config:", {
+  trustProxy: app.get("trust proxy"),
+  nodeEnv: process.env.NODE_ENV,
+});
+
 if (process.env.NODE_ENV === "production") {
-  if (!process.env.SESSION_SECRET || Buffer.byteLength(process.env.SESSION_SECRET) < 32) {
-    throw new Error("SESSION_SECRET must contain at least 32 bytes in production.");
+  if (
+    !process.env.SESSION_SECRET ||
+    Buffer.byteLength(process.env.SESSION_SECRET) < 32
+  ) {
+    throw new Error(
+      "SESSION_SECRET must contain at least 32 bytes in production."
+    );
   }
 } else if (!process.env.SESSION_SECRET) {
   process.env.SESSION_SECRET = crypto.randomBytes(48).toString("base64url");
 }
+
 
 app.use((req, res, next) => {
   if (process.env.NODE_ENV === "production" && req.secure) {
@@ -41,11 +57,25 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  if (process.env.NODE_ENV === "production" && !req.secure && req.path !== "/api/health") {
-    return res.status(426).json({ error: { code: "HTTPS_REQUIRED", field: null } });
+  console.log("HTTPS diagnostic:", {
+    secure: req.secure,
+    protocol: req.protocol,
+    forwardedProto: req.get("x-forwarded-proto"),
+  });
+
+  if (
+    process.env.NODE_ENV === "production" &&
+    !req.secure &&
+    req.path !== "/api/health"
+  ) {
+    return res.status(426).json({
+      error: { code: "HTTPS_REQUIRED", field: null },
+    });
   }
+
   return next();
 });
+
 
 const sessionCookie = {
   httpOnly: true,
