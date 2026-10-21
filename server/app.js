@@ -14,9 +14,17 @@ const { isAdministrator } = require("./auth/security");
 const app = express();
 app.disable("x-powered-by");
 
+
 if (process.env.TRUST_PROXY) {
-  app.set("trust proxy", process.env.TRUST_PROXY);
+  const trustProxy = Number(process.env.TRUST_PROXY);
+
+  if (!Number.isInteger(trustProxy) || trustProxy < 0) {
+    throw new Error("TRUST_PROXY must be a non-negative integer.");
+  }
+
+  app.set("trust proxy", trustProxy);
 }
+
 
 const PORT = process.env.PORT || 3000;
 const projectRoot = path.join(__dirname, "..");
