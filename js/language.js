@@ -39,6 +39,12 @@ export function createLanguageController(config, translations) {
     const description = document.querySelector('meta[name="description"]');
     if (description) description.content = text("description");
 
+    const socialTitle = document.querySelector('meta[property="og:title"]');
+    if (socialTitle) socialTitle.content = text("documentTitle");
+
+    const socialDescription = document.querySelector('meta[property="og:description"]');
+    if (socialDescription) socialDescription.content = text("description");
+
     document.querySelectorAll("[data-i18n]").forEach((element) => {
       const translatedText = text(element.dataset.i18n);
       if (translatedText) element.textContent = translatedText;

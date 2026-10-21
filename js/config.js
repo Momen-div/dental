@@ -38,42 +38,37 @@ const clinicConfig = {
     },
     image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=1000&q=85"
   },
-  services: [
-    {
-      id: "general",
+  services: {
+    general: {
       icon: "✧",
       image: "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=800&q=80"
     },
-    {
-      id: "cosmetic",
+    cosmetic: {
       icon: "◈",
       image: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=800&q=80"
     },
-    {
-      id: "whitening",
+    whitening: {
       icon: "✦",
       image: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=800&q=80"
     },
-    {
-      id: "implants",
+    implants: {
       icon: "◇",
       image: "https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?auto=format&fit=crop&w=800&q=80"
     },
-    {
-      id: "orthodontics",
+    orthodontics: {
       icon: "⌁",
       image: "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=800&q=80"
     },
-    {
-      id: "prevention",
+    prevention: {
       icon: "＋",
       image: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=800&q=80"
     }
-  ],
+  },
   booking: {
     phoneCountryCode: "+962",
-    openingDays: [0, 1, 2, 3, 4, 6], // JavaScript weekday numbers: Sunday = 0, Saturday = 6.
-    availableTimes: ["09:00", "10:00", "11:00", "12:00", "14:00", "15:00", "16:00"]
+    services: globalThis.DentalBookingRules.services,
+    openingDays: globalThis.DentalBookingRules.openingDays,
+    availableTimes: globalThis.DentalBookingRules.availableTimes
   },
   social: {
     instagram: "",

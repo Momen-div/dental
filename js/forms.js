@@ -1,47 +1,15 @@
-function validateEmail(value) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-}
-
-function normalizePhoneDigits(value) {
-  const latinDigitValue = value.replace(/[\u0660-\u0669\u06F0-\u06F9]/g, (digit) => {
-    const codePoint = digit.charCodeAt(0);
-    const zeroCodePoint = codePoint >= 0x06F0 ? 0x06F0 : 0x0660;
-    return String(codePoint - zeroCodePoint);
-  });
-
-  return latinDigitValue.replace(/\D/g, "");
-}
-
-function validatePhone(value) {
-  const digitCount = normalizePhoneDigits(value).length;
-  return digitCount >= 7 && digitCount <= 15;
-}
-
 function setDateMinimum(dateInput) {
   if (!dateInput) return;
 
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const day = String(today.getDate()).padStart(2, "0");
-  dateInput.min = `${year}-${month}-${day}`;
+  dateInput.min = globalThis.DentalBookingRules.getClinicDate();
 }
 
 function isAvailableDate(value, openingDays) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
-
-  const [year, month, day] = value.split("-").map(Number);
-  const selectedDate = new Date(year, month - 1, day);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const isRealDate = selectedDate.getFullYear() === year
-    && selectedDate.getMonth() === month - 1
-    && selectedDate.getDate() === day;
-
-  return isRealDate
-    && selectedDate >= today
-    && openingDays.includes(selectedDate.getDay());
+  return globalThis.DentalBookingRules.getDateError(
+    value,
+    globalThis.DentalBookingRules.getClinicDate(),
+    openingDays
+  );
 }
 
 function showFieldError(field, message) {
@@ -69,21 +37,29 @@ function validateBooking(form, config, text) {
   const email = form.querySelector("#booking-email");
   const date = form.querySelector("#booking-date");
   const time = form.querySelector("#booking-time");
+  const name = form.querySelector("#booking-name");
 
-  if (phone.value.trim() && !validatePhone(phone.value)) {
+  if (name.value.trim().length > 100) {
+    showFieldError(name, text("invalidName"));
+    isValid = false;
+  }
+
+  if (phone.value.trim() && !globalThis.DentalBookingRules.isValidPhone(phone.value)) {
     showFieldError(phone, text("invalidPhone"));
     isValid = false;
   }
 
-  if (email.value.trim() && !validateEmail(email.value.trim())) {
+  if (email.value.trim() && !globalThis.DentalBookingRules.isValidEmail(email.value.trim())) {
     showFieldError(email, text("invalidEmail"));
     isValid = false;
   }
 
-  if (date.value && !isAvailableDate(date.value, config.booking.openingDays)) {
-    const messageKey = date.value >= date.min ? "closedDay" : "invalidDate";
-    showFieldError(date, text(messageKey));
-    isValid = false;
+  if (date.value) {
+    const dateError = isAvailableDate(date.value, config.booking.openingDays);
+    if (dateError) {
+      showFieldError(date, text(dateError === "closedWeekday" ? "closedDay" : "invalidDate"));
+      isValid = false;
+    }
   }
 
   if (time.value && !config.booking.availableTimes.includes(time.value)) {
@@ -99,7 +75,11 @@ function validateContact(form, text) {
   const contactMethod = form.querySelector("#contact-method");
   const value = contactMethod.value.trim();
 
-  if (value && !validateEmail(value) && !validatePhone(value)) {
+  if (
+    value
+    && !globalThis.DentalBookingRules.isValidEmail(value)
+    && !globalThis.DentalBookingRules.isValidPhone(value)
+  ) {
     showFieldError(contactMethod, text("invalidContact"));
     isValid = false;
   }
@@ -124,12 +104,138 @@ function clearFieldError(field) {
   if (errorMessage) errorMessage.textContent = "";
 }
 
+const API_VALIDATION_MESSAGES = {
+  NAME_REQUIRED: "required",
+  NAME_TOO_LONG: "invalidName",
+  PHONE_INVALID: "invalidPhone",
+  EMAIL_INVALID: "invalidEmail",
+  SERVICE_INVALID: "invalidService",
+  DATE_INVALID: "invalidDate",
+  DATE_PAST: "invalidDate",
+  CLOSED_WEEKDAY: "closedDay",
+  TIME_INVALID: "invalidTime",
+  MESSAGE_TOO_LONG: "messageTooLong",
+  MESSAGE_INVALID: "invalidMessage",
+  SLOT_UNAVAILABLE: "slotUnavailable",
+};
+
+const BOOKING_FIELD_IDS = {
+  name: "booking-name",
+  phone: "booking-phone",
+  email: "booking-email",
+  service: "booking-service",
+  date: "booking-date",
+  time: "booking-time",
+  message: "booking-message",
+};
+
+function showApiError(form, status, response, result, text) {
+  const error = result?.error;
+  const messageKey = error && API_VALIDATION_MESSAGES[error.code];
+  const fieldName = Object.hasOwn(BOOKING_FIELD_IDS, error?.field)
+    ? BOOKING_FIELD_IDS[error.field]
+    : null;
+  const field = fieldName ? form.elements.namedItem(fieldName) : null;
+
+  if (messageKey && field) {
+    const message = text(messageKey);
+    showFieldError(field, message);
+    status.textContent = message;
+    field.focus();
+  } else if (response.status === 409 || error?.code === "SLOT_UNAVAILABLE") {
+    status.textContent = text("slotUnavailable");
+  } else if (response.status === 400) {
+    status.textContent = text("bookingInvalid");
+  } else {
+    status.textContent = text("bookingFailed");
+  }
+
+  status.classList.add("is-error");
+}
+
+export async function readJsonResponse(response) {
+  const contentType = response.headers.get("content-type") || "";
+  if (!/(?:application|text)\/(?:[\w.-]+\+)?json\b/i.test(contentType)) return null;
+
+  const body = await response.text();
+  if (!body.trim()) return null;
+
+  try {
+    return JSON.parse(body);
+  } catch {
+    return null;
+  }
+}
+
+
+async function submitBooking(form, status, text) {
+  const submitButton = form.querySelector('[type="submit"]');
+
+  if (submitButton) submitButton.disabled = true;
+
+  status.textContent = text("submitting");
+  status.classList.remove("is-error");
+
+  const formData = new FormData(form);
+
+  const payload = {
+    name: formData.get("name"),
+    phone: formData.get("phone"),
+    email: formData.get("email"),
+    service: formData.get("service"),
+    date: formData.get("date"),
+    time: formData.get("time"),
+    message: formData.get("message"),
+  };
+
+  try {
+    const response = await fetch("/api/appointments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const result = await readJsonResponse(response);
+
+    if (!response.ok) {
+      showApiError(form, status, response, result, text);
+      return;
+    }
+
+    if (
+      !result
+      || typeof result !== "object"
+      || result.status !== "pending"
+      || result.appointmentId == null
+    ) {
+      status.textContent = text("bookingFailed");
+      status.classList.add("is-error");
+      return;
+    }
+
+    status.textContent = text("bookingSuccess");
+    form.reset();
+    setDateMinimum(form.querySelector("#booking-date"));
+  } catch (error) {
+    console.error("Booking request failed:", error);
+    status.textContent = text("bookingFailed");
+    status.classList.add("is-error");
+  } finally {
+    if (submitButton) submitButton.disabled = false;
+  }
+}
+
+
+
 function handleFormSubmit(event, config, text) {
   event.preventDefault();
 
   const form = event.currentTarget;
-  const formType = form.dataset.demoForm;
+  const formType = form.dataset.formType;
   const status = form.querySelector(".form-status");
+
   if (!status) return;
 
   clearFormErrors(form);
@@ -147,13 +253,19 @@ function handleFormSubmit(event, config, text) {
     return;
   }
 
-  // This frontend-only preview does not send or store form data.
-  status.textContent = text(formType === "booking" ? "bookingSuccess" : "contactSuccess");
+  if (formType === "booking") {
+    submitBooking(form, status, text);
+    return;
+  }
+
+  // The contact form remains a frontend-only demo for now.
+  status.textContent = text("contactSuccess");
 }
+
 
 /** Clears previous messages after the display language changes. */
 export function clearFormFeedback() {
-  document.querySelectorAll("[data-demo-form]").forEach((form) => {
+  document.querySelectorAll("[data-form-type]").forEach((form) => {
     clearFormErrors(form);
     const status = form.querySelector(".form-status");
     if (!status) return;
@@ -163,16 +275,16 @@ export function clearFormFeedback() {
   });
 }
 
-/** Sets up local validation and feedback for the booking and contact forms. */
+/** Sets up validation and feedback for booking and contact forms. */
 export function initializeForms(config, text) {
   setDateMinimum(document.querySelector("#booking-date"));
 
-  document.querySelectorAll("[data-demo-form]").forEach((form) => {
+  document.querySelectorAll("[data-form-type]").forEach((form) => {
     form.addEventListener("submit", (event) => handleFormSubmit(event, config, text));
   });
 
   document.querySelectorAll(
-    "#booking-form input, #booking-form select, #contact-form input, #contact-form textarea"
+    "#booking-form input, #booking-form select, #booking-form textarea, #contact-form input, #contact-form textarea"
   ).forEach((field) => {
     field.addEventListener("input", () => clearFieldError(field));
     field.addEventListener("change", () => clearFieldError(field));

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>دخول الإدارة | عيادة الأسنان</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <script src="/js/admin.js" defer></script>
+</head>
+<body class="admin-page" data-page="login">
+  <main class="admin-login-wrap">
+    <a class="admin-back-link" href="/" data-copy="backSite">العودة إلى الموقع</a>
+    <section class="admin-card" aria-labelledby="login-title">
+      <div class="admin-brand-mark" aria-hidden="true">✦</div>
+      <p class="admin-eyebrow" data-copy="clinicAdmin">إدارة العيادة</p>
+      <h1 id="login-title" data-copy="loginTitle">دخول المسؤول</h1>
+      <p class="admin-muted" data-copy="loginHint">سجّل الدخول للوصول إلى طلبات المواعيد.</p>
+      <button class="admin-language" type="button" data-language-toggle aria-label="Switch to English">English</button>
+      <form id="login-form" autocomplete="on">
+        <label for="username" data-copy="username">اسم المستخدم أو البريد الإلكتروني</label>
+        <input id="username" name="username" type="text" autocomplete="username" maxlength="254" required>
+        <label for="password" data-copy="password">كلمة المرور</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" maxlength="128" required>
+        <p class="admin-message" id="login-message" role="alert" aria-live="polite"></p>
+        <button class="admin-primary" type="submit" data-copy="signIn">تسجيل الدخول</button>
+      </form>
+    </section>
+    <p class="admin-footnote" data-copy="privateNotice">هذه المساحة مخصصة لموظفي العيادة المصرح لهم.</p>
+  </main>
+</body>
+</html>

@@ -16,6 +16,12 @@ export function initializeGallery() {
   });
 
   dialog.querySelector(".lightbox-close")?.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+
+    event.preventDefault();
+    dialog.close();
+  });
   dialog.addEventListener("click", (event) => {
     if (event.target === dialog) dialog.close();
   });

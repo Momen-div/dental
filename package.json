@@ -1,0 +1,39 @@
+{
+  "name": "dentist",
+  "version": "1.0.0",
+  "description": "A responsive Arabic-first dental clinic website with a vanilla JavaScript frontend and Express/SQLite appointment API.",
+  "main": "server/app.js",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server/app.js",
+    "dev": "node --watch server/app.js",
+    "test": "node --test",
+    "admin:create": "node server/cli/admin.js create",
+    "admin:set-password": "node server/cli/admin.js set-password",
+    "backup": "node server/cli/backup.js create",
+    "backup:verify": "node server/cli/backup.js verify",
+    "backup:restore": "node server/cli/backup.js restore"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Momen-div/dental.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Momen-div/dental/issues"
+  },
+  "homepage": "https://github.com/Momen-div/dental#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^13.0.3",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.1",
+    "express-session": "^1.19.0"
+  },
+  "allowScripts": {
+    "better-sqlite3@13.0.3": true
+  }
+}

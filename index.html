@@ -7,6 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0A1F3D">
   <meta name="description" content="رعاية أسنان مخصصة في أجواء هادئة. استكشف الخدمات واطلب موعداً للتواصل مع العيادة.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="عيادة الأسنان | رعاية تليق بابتسامتك">
+  <meta property="og:description" content="رعاية أسنان مخصصة في أجواء هادئة. استكشف الخدمات واطلب موعداً للتواصل مع العيادة.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&amp;fit=crop&amp;w=1600&amp;q=90">
+  <meta name="twitter:card" content="summary_large_image">
   <title>عيادة الأسنان | رعاية تليق بابتسامتك</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,6 +20,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/responsive.css">
+  <script src="js/booking-rules.js"></script>
   <script type="module" src="js/main.js"></script>
 </head>
 
@@ -57,7 +63,7 @@
           <a class="button button-gold" href="#booking" data-i18n="book">اطلب موعداً</a>
           <a class="button button-outline" href="#services" data-i18n="explore">اكتشف خدماتنا</a>
         </div>
-        <p class="hero-note"><span class="note-dot" aria-hidden="true"></span><span data-i18n="heroNote">المواعيد تُطلب مسبقاً ويؤكدها فريق العيادة بعد التواصل.</span></p>
+        <p class="hero-note"><span class="note-dot" aria-hidden="true"></span><span data-i18n="heroNote">إرسال طلب الموعد لا يعني تأكيد الموعد.</span></p>
       </div>
       <div class="hero-visual">
         <img data-clinic-image="hero" src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1600&q=90" alt="مساحة عيادة أسنان مشرقة وحديثة — صورة توضيحية" fetchpriority="high">
@@ -74,7 +80,7 @@
         </div>
         <p data-i18n="servicesText">استكشف أمثلة على الخدمات. يُرجى التحقق من توفر كل خدمة لدى العيادة قبل النشر.</p>
       </div>
-      <div class="services-grid" id="services-grid" aria-live="polite"></div>
+      <div class="services-grid" id="services-grid"></div>
     </section>
 
     <section class="doctor-section" id="doctor" aria-labelledby="doctor-title">
@@ -200,29 +206,34 @@
           <article class="principle">
             <span class="principle-number">03</span>
             <h3 data-i18n="principleThreeTitle">تنسيق مريح</h3>
-            <p data-i18n="principleThreeText">طريقة سهلة لإرسال طلب موعد، مع متابعة مباشرة من فريق العيادة.</p>
+            <p data-i18n="principleThreeText">طريقة سهلة لإرسال طلب موعد مفضل.</p>
           </article>
         </div>
       </div>
     </section>
 
     <section class="booking-section" id="booking" aria-labelledby="booking-title">
+
       <div class="booking-intro">
+
         <p class="eyebrow" data-i18n="bookingEyebrow">خطوتك التالية</p>
-        <h2 id="booking-title" data-i18n="bookingTitle">اطلب موعداً للتواصل معك</h2>
+        <h2 id="booking-title" data-i18n="bookingTitle">أرسل طلب موعد</h2>
         <p data-i18n="bookingText">
-          هذا نموذج تجريبي فقط؛ لا يتم حفظ الطلب أو إرساله إلى العيادة. سيتطلب الحجز الفعلي ربط خدمة خلفية آمنة. إرسال الطلب لا يعني تأكيد الموعد، وسيتواصل فريق العيادة للتحقق من التوفر.
+          يمكنك إرسال طلب بموعد مفضل. إرسال الطلب لا يعني تأكيد الموعد.
         </p>
+
         <div class="demo-badge">
           <span aria-hidden="true">●</span>
-          <span data-i18n="demoBadge">نسخة تجريبية — لا يتم إرسال البيانات</span>
+          <span data-i18n="demoBadge">إرسال طلب موعد</span>
         </div>
+
       </div>
-      <form class="form-card" id="booking-form" novalidate data-demo-form="booking">
+
+      <form class="form-card" id="booking-form" novalidate data-form-type="booking">
         <div class="form-grid">
           <div class="field">
             <label for="booking-name" data-i18n="nameLabel">الاسم الكامل</label>
-            <input id="booking-name" name="name" autocomplete="name" required aria-describedby="booking-name-error">
+            <input id="booking-name" name="name" autocomplete="name" maxlength="100" required aria-describedby="booking-name-error">
             <span class="field-error" id="booking-name-error"></span>
           </div>
           <div class="field">
@@ -232,7 +243,7 @@
           </div>
           <div class="field">
             <label for="booking-email" data-i18n="emailLabel">البريد الإلكتروني (اختياري)</label>
-            <input id="booking-email" name="email" type="email" autocomplete="email" aria-describedby="booking-email-error">
+            <input id="booking-email" name="email" type="email" autocomplete="email" maxlength="254" aria-describedby="booking-email-error">
             <span class="field-error" id="booking-email-error"></span>
           </div>
           <div class="field">
@@ -261,10 +272,10 @@
           </div>
         </div>
         <p class="privacy-note" data-i18n="privacyText">
-          في النسخة التجريبية، لا تُرسل البيانات ولا تُخزّن. لا تدخل معلومات طبية أو خاصة.
+          سيتم إرسال بياناتك إلى الخادم لحفظ طلب الموعد ومراجعته. لا تُدخل معلومات طبية أو حساسة.
         </p>
         <p class="form-status" id="booking-status" role="status" aria-live="polite"></p>
-        <button class="button button-gold submit-button" type="submit" data-i18n="submitBooking">إرسال طلب تجريبي</button>
+        <button class="button button-gold submit-button" type="submit" data-i18n="submitBooking">إرسال طلب الموعد</button>
       </form>
     </section>
 
@@ -316,7 +327,7 @@
         <h2 id="message-title" data-i18n="messageTitle">كيف يمكننا مساعدتك؟</h2>
         <p data-i18n="contactPrivacy">نموذج توضيحي فقط: لن تُرسل رسالتك ولن تصل إلى العيادة في هذه النسخة.</p>
       </div>
-      <form id="contact-form" class="message-form" novalidate data-demo-form="contact">
+      <form id="contact-form" class="message-form" novalidate data-form-type="contact">
         <div class="field">
           <label for="contact-name" data-i18n="contactName">الاسم</label>
           <input id="contact-name" name="name" autocomplete="name" required aria-describedby="contact-name-error">
@@ -324,7 +335,7 @@
         </div>
         <div class="field">
           <label for="contact-method" data-i18n="contactMethod">البريد الإلكتروني أو الهاتف</label>
-          <input id="contact-method" name="contact" autocomplete="email" required aria-describedby="contact-method-error">
+          <input id="contact-method" name="contact" required aria-describedby="contact-method-error">
           <span class="field-error" id="contact-method-error"></span>
         </div>
         <div class="field">

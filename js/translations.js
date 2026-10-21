@@ -1,41 +1,394 @@
+
 /* Arabic and English interface copy, kept separate from application logic. */
+
 const translations = {
   ar: {
     documentTitle: "عيادة الأسنان | رعاية تليق بابتسامتك",
-    description: "رعاية أسنان مخصصة في أجواء هادئة. استكشف الخدمات واطلب موعداً للتواصل مع العيادة.",
-    home: "الرئيسية", services: "خدماتنا", doctor: "عن الطبيب", gallery: "معرض الصور", whyUs: "لماذا نحن", contact: "تواصل معنا",
-    language: "English", languageLabel: "Switch to English", menuOpen: "فتح القائمة", menuClose: "إغلاق القائمة", book: "اطلب موعداً",
-    heroEyebrow: "عناية هادئة، واهتمام بكل التفاصيل", heroTitle: "ابتسامة أكثر صحة،\nوثقة تبدأ من هنا", heroText: "تجربة رعاية أسنان شخصية تضع راحتك واحتياجاتك في مقدمة الاهتمام.", explore: "اكتشف خدماتنا", heroNote: "المواعيد تُطلب مسبقاً ويؤكدها فريق العيادة بعد التواصل.",
-    servicesEyebrow: "رعاية متكاملة لابتسامتك", servicesTitle: "خدمات مصممة حول احتياجاتك", servicesText: "استكشف أمثلة على الخدمات. يُرجى التحقق من توفر كل خدمة لدى العيادة قبل النشر.", serviceGeneralTitle: "طب الأسنان العام", serviceGeneralText: "فحوصات ورعاية أساسية لصحة الفم، وفق تقييم الطبيب واحتياجات كل شخص.", serviceCosmeticTitle: "طب الأسنان التجميلي", serviceCosmeticText: "خيارات تجميلية تُناقش بعد تقييم الحالة وتوضيح البدائل المناسبة.", serviceWhiteningTitle: "تبييض الأسنان", serviceWhiteningText: "استشارة حول خيارات التبييض ومدى ملاءمتها بعد فحص الأسنان.", serviceImplantsTitle: "زراعة الأسنان", serviceImplantsText: "تقييم وخيارات تعويض الأسنان تُحدد بالتشاور مع طبيب الأسنان.", serviceOrthodonticsTitle: "تقويم الأسنان", serviceOrthodonticsText: "مناقشة خيارات التقويم المناسبة بعد فحص وشرح خطة الرعاية.", servicePreventionTitle: "الوقاية والعناية", servicePreventionText: "إرشادات للعناية اليومية وخيارات الوقاية بحسب احتياجاتك.",
-    doctorEyebrow: "تعرّف على طبيب الأسنان", doctorTitle: "رعاية شخصية تبدأ بالإنصات", doctorText: "تعرّف على الطبيب/ة ونهجه/ا في رعاية المرضى. استبدل النص والصورة بمعلومات معتمدة قبل النشر.", doctorCta: "تواصل مع العيادة", credentialsLabel: "المؤهلات والتخصص",
-    galleryEyebrow: "مساحة ملهمة", galleryTitle: "تفاصيل من عالم العناية بالأسنان", galleryText: "صور توضيحية من مكتبات الصور، وليست حالات مرضى أو نتائج علاجية للعيادة.", illustrative: "صورة توضيحية", galleryOne: "مساحة عيادة مشرقة", galleryTwo: "تفاصيل العناية اليومية", galleryThree: "تجربة زيارة مريحة", galleryFour: "معدات عناية حديثة", galleryFive: "ابتسامة طبيعية", gallerySix: "تفاصيل من العيادة", imageOpen: "عرض الصورة بحجم أكبر", imageClose: "إغلاق عرض الصورة",
-    whyEyebrow: "تجربة تضعك أولاً", whyTitle: "تفاصيل صغيرة تصنع فرقاً", whyText: "مبادئ عامة لتجربة رعاية أفضل، تُحدّث بما يتوافق مع خدمات العيادة الفعلية.", principleOneTitle: "تواصل واضح", principleOneText: "شرح الخيارات والخطوات بلغة مفهومة، مع إتاحة المجال لأسئلتك.", principleTwoTitle: "اهتمام شخصي", principleTwoText: "الاستماع لاحتياجاتك وتفضيلاتك عند مناقشة الرعاية المناسبة.", principleThreeTitle: "تنسيق مريح", principleThreeText: "طريقة سهلة لإرسال طلب موعد، مع متابعة مباشرة من فريق العيادة.",
-    bookingEyebrow: "خطوتك التالية", bookingTitle: "اطلب موعداً للتواصل معك", bookingText: "هذا نموذج تجريبي فقط؛ لا يتم حفظ الطلب أو إرساله إلى العيادة. سيتطلب الحجز الفعلي ربط خدمة خلفية آمنة. إرسال الطلب لا يعني تأكيد الموعد، وسيتواصل فريق العيادة للتحقق من التوفر.", demoBadge: "نسخة تجريبية — لا يتم إرسال البيانات", nameLabel: "الاسم الكامل", phoneLabel: "رقم الهاتف", emailLabel: "البريد الإلكتروني (اختياري)", serviceLabel: "الخدمة المطلوبة", chooseService: "اختر خدمة", dateLabel: "التاريخ المفضل", timeLabel: "الوقت المفضل", chooseTime: "اختر وقتاً مفضلاً", messageLabel: "رسالة إضافية (اختياري)", privacyText: "في النسخة التجريبية، لا تُرسل البيانات ولا تُخزّن. لا تدخل معلومات طبية أو خاصة.", submitBooking: "إرسال طلب تجريبي", bookingSuccess: "نجح التحقق محلياً. لم يتم إرسال طلبك أو حفظه؛ تواصل مع العيادة لتأكيد الموعد.",
-    contactEyebrow: "نحن هنا للمساعدة", contactTitle: "تواصل مع العيادة", contactText: "بيانات التواصل أدناه حقول تجريبية. استبدلها بمعلومات تم التحقق منها.", phone: "الهاتف", whatsapp: "واتساب", email: "البريد الإلكتروني", address: "العنوان", hours: "ساعات العمل", mapTitle: "موقع توضيحي في عمّان، الأردن — ليس عنوان العيادة الفعلي", mapNotice: "موقع تجريبي في عمّان — استبدل الرابط بعنوان العيادة الحقيقي.",
-    messageEyebrow: "أرسل استفسارك", messageTitle: "كيف يمكننا مساعدتك؟", contactName: "الاسم", contactMethod: "البريد الإلكتروني أو الهاتف", subject: "الموضوع", message: "رسالتك", submitMessage: "معاينة الرسالة", contactPrivacy: "نموذج توضيحي فقط: لن تُرسل رسالتك ولن تصل إلى العيادة في هذه النسخة.", contactSuccess: "اكتمل التحقق من النموذج محلياً فقط. لم تُرسل الرسالة أو تُستلم من العيادة.",
-    required: "هذا الحقل مطلوب.", invalidEmail: "أدخل بريداً إلكترونياً صالحاً.", invalidPhone: "أدخل رقم هاتف صالحاً.", invalidDate: "اختر تاريخاً صحيحاً في المستقبل.", closedDay: "يرجى اختيار يوم استقبال متاح.", invalidTime: "اختر وقتاً من الخيارات المتاحة.", invalidContact: "أدخل بريداً إلكترونياً أو رقم هاتف صالحاً.", errorSummary: "يرجى مراجعة الحقول الموضحة.",
-    footerLine: "نموذج موقع قابل للتخصيص لعيادة الأسنان.", privacy: "سياسة الخصوصية (رابط تجريبي)", privacyNotice: "أضف سياسة خصوصية معتمدة قبل جمع أي بيانات من الزوار.", footerContact: "بيانات التواصل تحتاج إلى تحديث", backTop: "العودة إلى الأعلى", social: "تابعنا",
-    serviceNames: { general: "طب الأسنان العام", cosmetic: "طب الأسنان التجميلي", whitening: "تبييض الأسنان", implants: "زراعة الأسنان", orthodontics: "تقويم الأسنان", prevention: "الوقاية والعناية" },
-    timeLabels: { "09:00": "٩:٠٠ صباحاً", "10:00": "١٠:٠٠ صباحاً", "11:00": "١١:٠٠ صباحاً", "12:00": "١٢:٠٠ ظهراً", "14:00": "٢:٠٠ ظهراً", "15:00": "٣:٠٠ مساءً", "16:00": "٤:٠٠ مساءً" }
+    description:
+      "رعاية أسنان مخصصة في أجواء هادئة. استكشف الخدمات وأرسل طلب موعد.",
+
+    home: "الرئيسية",
+    services: "خدماتنا",
+    doctor: "عن الطبيب",
+    gallery: "معرض الصور",
+    whyUs: "لماذا نحن",
+    contact: "تواصل معنا",
+
+    language: "English",
+    languageLabel: "Switch to English",
+    menuOpen: "فتح القائمة",
+    menuClose: "إغلاق القائمة",
+    book: "اطلب موعداً",
+
+    heroEyebrow: "عناية هادئة، واهتمام بكل التفاصيل",
+    heroTitle: "ابتسامة أكثر صحة،\nوثقة تبدأ من هنا",
+    heroText:
+      "تجربة رعاية أسنان شخصية تضع راحتك واحتياجاتك في مقدمة الاهتمام.",
+    explore: "اكتشف خدماتنا",
+    heroNote:
+      "إرسال طلب الموعد لا يعني تأكيد الموعد.",
+
+    servicesEyebrow: "رعاية متكاملة لابتسامتك",
+    servicesTitle: "خدمات مصممة حول احتياجاتك",
+    servicesText:
+      "استكشف أمثلة على الخدمات. يُرجى التحقق من توفر كل خدمة لدى العيادة قبل النشر.",
+
+    serviceGeneralTitle: "طب الأسنان العام",
+    serviceGeneralText:
+      "فحوصات ورعاية أساسية لصحة الفم، وفق تقييم الطبيب واحتياجات كل شخص.",
+
+    serviceCosmeticTitle: "طب الأسنان التجميلي",
+    serviceCosmeticText:
+      "خيارات تجميلية تُناقش بعد تقييم الحالة وتوضيح البدائل المناسبة.",
+
+    serviceWhiteningTitle: "تبييض الأسنان",
+    serviceWhiteningText:
+      "استشارة حول خيارات التبييض ومدى ملاءمتها بعد فحص الأسنان.",
+
+    serviceImplantsTitle: "زراعة الأسنان",
+    serviceImplantsText:
+      "تقييم وخيارات تعويض الأسنان تُحدد بالتشاور مع طبيب الأسنان.",
+
+    serviceOrthodonticsTitle: "تقويم الأسنان",
+    serviceOrthodonticsText:
+      "مناقشة خيارات التقويم المناسبة بعد فحص وشرح خطة الرعاية.",
+
+    servicePreventionTitle: "الوقاية والعناية",
+    servicePreventionText:
+      "إرشادات للعناية اليومية وخيارات الوقاية بحسب احتياجاتك.",
+
+    doctorEyebrow: "تعرّف على طبيب الأسنان",
+    doctorTitle: "رعاية شخصية تبدأ بالإنصات",
+    doctorCta: "تواصل مع العيادة",
+    credentialsLabel: "المؤهلات والتخصص",
+
+    galleryEyebrow: "مساحة ملهمة",
+    galleryTitle: "تفاصيل من عالم العناية بالأسنان",
+    galleryText:
+      "صور توضيحية من مكتبات الصور، وليست حالات مرضى أو نتائج علاجية للعيادة.",
+    illustrative: "صورة توضيحية",
+    galleryOne: "مساحة عيادة مشرقة",
+    galleryTwo: "تفاصيل العناية اليومية",
+    galleryThree: "تجربة زيارة مريحة",
+    galleryFour: "معدات عناية حديثة",
+    galleryFive: "ابتسامة طبيعية",
+    gallerySix: "تفاصيل من العيادة",
+    imageClose: "إغلاق عرض الصورة",
+
+    whyEyebrow: "تجربة تضعك أولاً",
+    whyTitle: "تفاصيل صغيرة تصنع فرقاً",
+    whyText:
+      "مبادئ عامة لتجربة رعاية أفضل، تُحدّث بما يتوافق مع خدمات العيادة الفعلية.",
+
+    principleOneTitle: "تواصل واضح",
+    principleOneText:
+      "شرح الخيارات والخطوات بلغة مفهومة، مع إتاحة المجال لأسئلتك.",
+
+    principleTwoTitle: "اهتمام شخصي",
+    principleTwoText:
+      "الاستماع لاحتياجاتك وتفضيلاتك عند مناقشة الرعاية المناسبة.",
+
+    principleThreeTitle: "تنسيق مريح",
+    principleThreeText:
+      "طريقة سهلة لإرسال طلب موعد مفضل.",
+
+    // Appointment booking
+    bookingEyebrow: "خطوتك التالية",
+    bookingTitle: "أرسل طلب موعد",
+    bookingText:
+      "يمكنك إرسال طلب بموعد مفضل. إرسال الطلب لا يعني تأكيد الموعد.",
+
+    demoBadge: "إرسال طلب موعد",
+
+    nameLabel: "الاسم الكامل",
+    phoneLabel: "رقم الهاتف",
+    emailLabel: "البريد الإلكتروني (اختياري)",
+    serviceLabel: "الخدمة المطلوبة",
+    chooseService: "اختر خدمة",
+    dateLabel: "التاريخ المفضل",
+    timeLabel: "الوقت المفضل",
+    chooseTime: "اختر وقتاً مفضلاً",
+    messageLabel: "رسالة إضافية (اختياري)",
+
+    privacyText:
+      "سيتم إرسال بياناتك إلى الخادم لحفظ طلب الموعد ومراجعته. لا تُدخل معلومات طبية أو حساسة.",
+
+    submitBooking: "إرسال طلب الموعد",
+    submitting: "جارٍ إرسال طلب الموعد...",
+    bookingSuccess:
+      "تم استلام طلب الموعد. هذا الطلب لا يُعد تأكيداً للموعد.",
+    slotUnavailable:
+      "هذا الوقت لم يعد متاحاً. اختر تاريخاً أو وقتاً آخر.",
+    bookingInvalid:
+      "تعذّر قبول الطلب. راجع البيانات المدخلة والتاريخ والوقت المختارين.",
+    bookingFailed:
+      "تعذّر إرسال طلب الموعد حالياً. حاول مرة أخرى لاحقاً.",
+
+    // Contact form remains a frontend-only demo
+    contactEyebrow: "نحن هنا للمساعدة",
+    contactTitle: "تواصل مع العيادة",
+    contactText:
+      "بيانات التواصل أدناه حقول تجريبية. استبدلها بمعلومات تم التحقق منها.",
+
+    phone: "الهاتف",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    address: "العنوان",
+    hours: "ساعات العمل",
+
+    mapTitle:
+      "موقع توضيحي في عمّان، الأردن — ليس عنوان العيادة الفعلي",
+    mapNotice:
+      "موقع تجريبي في عمّان — استبدل الرابط بعنوان العيادة الحقيقي.",
+
+    messageEyebrow: "أرسل استفسارك",
+    messageTitle: "كيف يمكننا مساعدتك؟",
+    contactName: "الاسم",
+    contactMethod: "البريد الإلكتروني أو الهاتف",
+    subject: "الموضوع",
+    message: "رسالتك",
+    submitMessage: "معاينة الرسالة",
+
+    contactPrivacy:
+      "نموذج توضيحي فقط: لن تُرسل رسالتك ولن تصل إلى العيادة في هذه النسخة.",
+    contactSuccess:
+      "اكتمل التحقق من النموذج محلياً فقط. لم تُرسل الرسالة أو تُستلم من العيادة.",
+
+    // Validation messages
+    required: "هذا الحقل مطلوب.",
+    invalidName: "يجب ألا يتجاوز الاسم ١٠٠ حرف.",
+    invalidEmail: "أدخل بريداً إلكترونياً صالحاً.",
+    invalidPhone: "أدخل رقم هاتف صالحاً.",
+    invalidService: "اختر خدمة من الخيارات المتاحة.",
+    invalidDate: "اختر تاريخاً صحيحاً اليوم أو في المستقبل.",
+    closedDay: "يرجى اختيار يوم استقبال متاح.",
+    invalidTime: "اختر وقتاً من الخيارات المتاحة.",
+    messageTooLong: "يجب ألا تتجاوز الرسالة ٥٠٠ حرف.",
+    invalidMessage: "أدخل رسالة نصية صالحة.",
+    invalidContact: "أدخل بريداً إلكترونياً أو رقم هاتف صالحاً.",
+    errorSummary: "يرجى مراجعة الحقول الموضحة.",
+
+    footerLine: "نموذج موقع قابل للتخصيص لعيادة الأسنان.",
+    privacy: "سياسة الخصوصية (رابط تجريبي)",
+    privacyNotice:
+      "أضف سياسة خصوصية معتمدة قبل جمع أي بيانات من الزوار.",
+    footerContact: "بيانات التواصل تحتاج إلى تحديث",
+    backTop: "العودة إلى الأعلى",
+    social: "تابعنا",
+
+    serviceNames: {
+      general: "طب الأسنان العام",
+      cosmetic: "طب الأسنان التجميلي",
+      whitening: "تبييض الأسنان",
+      implants: "زراعة الأسنان",
+      orthodontics: "تقويم الأسنان",
+      prevention: "الوقاية والعناية",
+    },
+
+    timeLabels: {
+      "09:00": "٩:٠٠ صباحاً",
+      "10:00": "١٠:٠٠ صباحاً",
+      "11:00": "١١:٠٠ صباحاً",
+      "12:00": "١٢:٠٠ ظهراً",
+      "14:00": "٢:٠٠ ظهراً",
+      "15:00": "٣:٠٠ مساءً",
+      "16:00": "٤:٠٠ مساءً",
+    },
   },
+
   en: {
     documentTitle: "Dental Care | Thoughtful Care for Your Smile",
-    description: "Personalized dental care in a calm setting. Explore services and request a time for the clinic to contact you.",
-    home: "Home", services: "Services", doctor: "The Dentist", gallery: "Gallery", whyUs: "Why Us", contact: "Contact",
-    language: "العربية", languageLabel: "التبديل إلى العربية", menuOpen: "Open menu", menuClose: "Close menu", book: "Request an Appointment",
-    heroEyebrow: "Thoughtful care, down to every detail", heroTitle: "A healthier smile.\nConfidence starts here.", heroText: "A personal dental care experience that puts your comfort and needs first.", explore: "Explore Services", heroNote: "Appointments are requests and are confirmed by the clinic team after contact.",
-    servicesEyebrow: "Care for your smile", servicesTitle: "Services shaped around your needs", servicesText: "Explore illustrative service examples. Verify each service is actually offered before publication.", serviceGeneralTitle: "General Dentistry", serviceGeneralText: "Examinations and essential oral care guided by a dentist's assessment and individual needs.", serviceCosmeticTitle: "Cosmetic Dentistry", serviceCosmeticText: "Cosmetic options discussed after an assessment and explanation of appropriate alternatives.", serviceWhiteningTitle: "Teeth Whitening", serviceWhiteningText: "A consultation about whitening options and suitability after a dental examination.", serviceImplantsTitle: "Dental Implants", serviceImplantsText: "Assessment and tooth replacement options determined in consultation with a dentist.", serviceOrthodonticsTitle: "Orthodontics", serviceOrthodonticsText: "Discuss suitable orthodontic options after an examination and care-plan review.", servicePreventionTitle: "Preventive Care", servicePreventionText: "Guidance for daily care and preventive options based on your needs.",
-    doctorEyebrow: "Meet the dentist", doctorTitle: "Personal care begins with listening", doctorText: "Learn about the dentist and their approach to patient care. Replace the copy and image with approved information before publication.", doctorCta: "Contact the Clinic", credentialsLabel: "Qualifications & specialty",
-    galleryEyebrow: "A little inspiration", galleryTitle: "A closer look at dental care", galleryText: "Illustrative stock photography—not clinic patients, cases, or treatment outcomes.", illustrative: "Illustrative photo", galleryOne: "A bright clinic space", galleryTwo: "Everyday care details", galleryThree: "A comfortable visit", galleryFour: "Modern care equipment", galleryFive: "A natural smile", gallerySix: "Clinic details", imageOpen: "View image larger", imageClose: "Close image viewer",
-    whyEyebrow: "An experience centered on you", whyTitle: "Small details make a difference", whyText: "General principles for a thoughtful care experience; adapt these to the clinic's actual practices.", principleOneTitle: "Clear communication", principleOneText: "Discuss options and next steps in plain language, with room for your questions.", principleTwoTitle: "Personal attention", principleTwoText: "Listen to your needs and preferences when discussing suitable care.", principleThreeTitle: "Convenient coordination", principleThreeText: "An easy way to request a time, followed up directly by the clinic team.",
-    bookingEyebrow: "Your next step", bookingTitle: "Request a time to be contacted", bookingText: "This is a demonstration form only; requests are not saved or sent to the clinic. Real booking requires a secure backend integration. Submitting does not confirm an appointment—the clinic team must contact you to check availability.", demoBadge: "Demo mode — no data is sent", nameLabel: "Full name", phoneLabel: "Phone number", emailLabel: "Email address (optional)", serviceLabel: "Requested service", chooseService: "Choose a service", dateLabel: "Preferred date", timeLabel: "Preferred time", chooseTime: "Choose a preferred time", messageLabel: "Additional message (optional)", privacyText: "In this demo, data is not sent or stored. Do not enter medical or sensitive information.", submitBooking: "Submit demo request", bookingSuccess: "Local validation passed. Your request was not sent or saved; contact the clinic to confirm an appointment.",
-    contactEyebrow: "We're here to help", contactTitle: "Contact the clinic", contactText: "The contact details below are placeholders. Replace them with verified information.", phone: "Phone", whatsapp: "WhatsApp", email: "Email", address: "Address", hours: "Opening hours", mapTitle: "Demonstration location in Amman, Jordan — not the clinic's actual address", mapNotice: "Demo location in Amman — replace with the real clinic map URL.",
-    messageEyebrow: "Send an enquiry", messageTitle: "How can we help?", contactName: "Name", contactMethod: "Email or phone", subject: "Subject", message: "Your message", submitMessage: "Preview message", contactPrivacy: "Demonstration only: this message will not be sent or received by the clinic.", contactSuccess: "Local form validation passed only. The message was not sent or received by the clinic.",
-    required: "This field is required.", invalidEmail: "Enter a valid email address.", invalidPhone: "Enter a valid phone number.", invalidDate: "Choose a valid future date.", closedDay: "Please select an available clinic day.", invalidTime: "Choose a time from the available options.", invalidContact: "Enter a valid email address or phone number.", errorSummary: "Please review the highlighted fields.",
-    footerLine: "A customizable dental clinic website template.", privacy: "Privacy policy (placeholder link)", privacyNotice: "Add an approved privacy policy before collecting any visitor information.", footerContact: "Contact details need updating", backTop: "Back to top", social: "Follow us",
-    serviceNames: { general: "General Dentistry", cosmetic: "Cosmetic Dentistry", whitening: "Teeth Whitening", implants: "Dental Implants", orthodontics: "Orthodontics", prevention: "Preventive Care" },
-    timeLabels: { "09:00": "9:00 AM", "10:00": "10:00 AM", "11:00": "11:00 AM", "12:00": "12:00 PM", "14:00": "2:00 PM", "15:00": "3:00 PM", "16:00": "4:00 PM" }
-  }
+    description:
+      "Personalized dental care in a calm setting. Explore services and submit an appointment request.",
+
+    home: "Home",
+    services: "Services",
+    doctor: "The Dentist",
+    gallery: "Gallery",
+    whyUs: "Why Us",
+    contact: "Contact",
+
+    language: "العربية",
+    languageLabel: "التبديل إلى العربية",
+    menuOpen: "Open menu",
+    menuClose: "Close menu",
+    book: "Request an Appointment",
+
+    heroEyebrow: "Thoughtful care, down to every detail",
+    heroTitle: "A healthier smile.\nConfidence starts here.",
+    heroText:
+      "A personal dental care experience that puts your comfort and needs first.",
+    explore: "Explore Services",
+    heroNote:
+      "Submitting an appointment request does not confirm an appointment.",
+
+    servicesEyebrow: "Care for your smile",
+    servicesTitle: "Services shaped around your needs",
+    servicesText:
+      "Explore illustrative service examples. Verify each service is actually offered before publication.",
+
+    serviceGeneralTitle: "General Dentistry",
+    serviceGeneralText:
+      "Examinations and essential oral care guided by a dentist's assessment and individual needs.",
+
+    serviceCosmeticTitle: "Cosmetic Dentistry",
+    serviceCosmeticText:
+      "Cosmetic options discussed after an assessment and explanation of appropriate alternatives.",
+
+    serviceWhiteningTitle: "Teeth Whitening",
+    serviceWhiteningText:
+      "A consultation about whitening options and suitability after a dental examination.",
+
+    serviceImplantsTitle: "Dental Implants",
+    serviceImplantsText:
+      "Assessment and tooth replacement options determined in consultation with a dentist.",
+
+    serviceOrthodonticsTitle: "Orthodontics",
+    serviceOrthodonticsText:
+      "Discuss suitable orthodontic options after an examination and care-plan review.",
+
+    servicePreventionTitle: "Preventive Care",
+    servicePreventionText:
+      "Guidance for daily care and preventive options based on your needs.",
+
+    doctorEyebrow: "Meet the dentist",
+    doctorTitle: "Personal care begins with listening",
+    doctorCta: "Contact the Clinic",
+    credentialsLabel: "Qualifications & specialty",
+
+    galleryEyebrow: "A little inspiration",
+    galleryTitle: "A closer look at dental care",
+    galleryText:
+      "Illustrative stock photography—not clinic patients, cases, or treatment outcomes.",
+    illustrative: "Illustrative photo",
+    galleryOne: "A bright clinic space",
+    galleryTwo: "Everyday care details",
+    galleryThree: "A comfortable visit",
+    galleryFour: "Modern care equipment",
+    galleryFive: "A natural smile",
+    gallerySix: "Clinic details",
+    imageClose: "Close image viewer",
+
+    whyEyebrow: "An experience centered on you",
+    whyTitle: "Small details make a difference",
+    whyText:
+      "General principles for a thoughtful care experience; adapt these to the clinic's actual practices.",
+
+    principleOneTitle: "Clear communication",
+    principleOneText:
+      "Discuss options and next steps in plain language, with room for your questions.",
+
+    principleTwoTitle: "Personal attention",
+    principleTwoText:
+      "Listen to your needs and preferences when discussing suitable care.",
+
+    principleThreeTitle: "Convenient coordination",
+    principleThreeText:
+      "An easy way to submit a preferred appointment request.",
+
+    // Appointment booking
+    bookingEyebrow: "Your next step",
+    bookingTitle: "Request an appointment",
+    bookingText:
+      "You can submit a preferred appointment request. Submission does not confirm an appointment.",
+
+    demoBadge: "Appointment request",
+
+    nameLabel: "Full name",
+    phoneLabel: "Phone number",
+    emailLabel: "Email address (optional)",
+    serviceLabel: "Requested service",
+    chooseService: "Choose a service",
+    dateLabel: "Preferred date",
+    timeLabel: "Preferred time",
+    chooseTime: "Choose a preferred time",
+    messageLabel: "Additional message (optional)",
+
+    privacyText:
+      "Your information will be sent to the server to store and review your appointment request. Do not enter medical or sensitive information.",
+
+    submitBooking: "Submit appointment request",
+    submitting: "Submitting your appointment request...",
+    bookingSuccess:
+      "Your appointment request was received. This is not an appointment confirmation.",
+    slotUnavailable:
+      "This time is no longer available. Please choose another date or time.",
+    bookingInvalid:
+      "The request was rejected. Check the entered details, date, and time.",
+    bookingFailed:
+      "Unable to submit your appointment request right now. Please try again later.",
+
+    // Contact form remains a frontend-only demo
+    contactEyebrow: "We're here to help",
+    contactTitle: "Contact the clinic",
+    contactText:
+      "The contact details below are placeholders. Replace them with verified information.",
+
+    phone: "Phone",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    address: "Address",
+    hours: "Opening hours",
+
+    mapTitle:
+      "Demonstration location in Amman, Jordan — not the clinic's actual address",
+    mapNotice:
+      "Demo location in Amman — replace with the real clinic map URL.",
+
+    messageEyebrow: "Send an enquiry",
+    messageTitle: "How can we help?",
+    contactName: "Name",
+    contactMethod: "Email or phone",
+    subject: "Subject",
+    message: "Your message",
+    submitMessage: "Preview message",
+
+    contactPrivacy:
+      "Demonstration only: this message will not be sent or received by the clinic.",
+    contactSuccess:
+      "Local form validation passed only. The message was not sent or received by the clinic.",
+
+    // Validation messages
+    required: "This field is required.",
+    invalidName: "Name must be 100 characters or fewer.",
+    invalidEmail: "Enter a valid email address.",
+    invalidPhone: "Enter a valid phone number.",
+    invalidService: "Choose a service from the available options.",
+    invalidDate: "Choose a valid date today or in the future.",
+    closedDay: "Please select an available clinic day.",
+    invalidTime: "Choose a time from the available options.",
+    messageTooLong: "Message must be 500 characters or fewer.",
+    invalidMessage: "Enter a valid text message.",
+    invalidContact: "Enter a valid email address or phone number.",
+    errorSummary: "Please review the highlighted fields.",
+
+    footerLine: "A customizable dental clinic website template.",
+    privacy: "Privacy policy (placeholder link)",
+    privacyNotice:
+      "Add an approved privacy policy before collecting any visitor information.",
+    footerContact: "Contact details need updating",
+    backTop: "Back to top",
+    social: "Follow us",
+
+    serviceNames: {
+      general: "General Dentistry",
+      cosmetic: "Cosmetic Dentistry",
+      whitening: "Teeth Whitening",
+      implants: "Dental Implants",
+      orthodontics: "Orthodontics",
+      prevention: "Preventive Care",
+    },
+
+    timeLabels: {
+      "09:00": "9:00 AM",
+      "10:00": "10:00 AM",
+      "11:00": "11:00 AM",
+      "12:00": "12:00 PM",
+      "14:00": "2:00 PM",
+      "15:00": "3:00 PM",
+      "16:00": "4:00 PM",
+    },
+  },
 };
 
 export default translations;

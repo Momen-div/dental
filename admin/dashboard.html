@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>المواعيد | إدارة العيادة</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <script src="/js/admin.js" defer></script>
+</head>
+
+<body class="admin-page" data-page="dashboard">
+
+  <header class="admin-header">
+    <a class="admin-brand" href="/admin" aria-label="إدارة العيادة">
+      <span class="admin-brand-mark" aria-hidden="true">✦</span>
+      <span><small data-copy="clinicAdmin">إدارة العيادة</small><strong data-copy="appointmentsTitle">المواعيد</strong></span>
+    </a>
+    <div class="admin-header-actions">
+      <span class="admin-user" id="admin-user"></span>
+      <button class="admin-language" type="button" data-language-toggle>English</button>
+      <button class="admin-logout" type="button" id="logout-button" data-copy="logout">تسجيل الخروج</button>
+    </div>
+  </header>
+
+  <main class="admin-main">
+
+    <div class="admin-page-heading">
+      <div>
+        <p class="admin-eyebrow" data-copy="dashboardEyebrow">تنسيق رعاية المرضى</p>
+        <h1 data-copy="appointmentsTitle">المواعيد</h1>
+      </div>
+
+      <button class="admin-refresh" id="refresh-button" type="button" data-copy="refresh">تحديث القائمة</button>
+    </div>
+
+    <section class="admin-stats" aria-label="Appointment summary" id="summary"></section>
+    <section class="admin-panel" aria-labelledby="filters-title">
+      <h2 id="filters-title" class="sr-only" data-copy="filterTitle">البحث والتصفية</h2>
+      <form class="admin-filters" id="filter-form">
+        <label><span data-copy="search">بحث بالاسم أو الهاتف أو البريد</span><input name="search" type="search" maxlength="100" autocomplete="off"></label>
+        <label><span data-copy="date">التاريخ</span><input name="date" type="date"></label>
+        <label><span data-copy="service">الخدمة</span><select name="service"><option value="" data-copy="allServices">كل الخدمات</option><option value="general">—</option><option value="cosmetic">—</option><option value="whitening">—</option><option value="implants">—</option><option value="orthodontics">—</option><option value="prevention">—</option></select></label>
+        <label><span data-copy="status">الحالة</span><select name="status"><option value="all" data-copy="allStatuses">كل الحالات</option><option value="pending" data-copy="pending">قيد الانتظار</option><option value="confirmed" data-copy="confirmed">مؤكد</option><option value="cancelled" data-copy="cancelled">ملغي</option></select></label>
+        <button class="admin-primary admin-filter-submit" type="submit" data-copy="applyFilters">تطبيق</button>
+      </form>
+    </section>
+    <p id="dashboard-message" class="admin-message" role="status" aria-live="polite"></p>
+    <section id="appointment-list" class="appointment-list" aria-live="polite" aria-busy="false"></section>
+    <nav class="admin-pagination" id="pagination" aria-label="Pagination"></nav>
+
+  </main>
+
+  <template id="appointment-template">
+    <article class="appointment-card">
+      <div class="appointment-card-top">
+        <div>
+          <h2 class="appointment-name"></h2>
+          <p class="appointment-meta"></p>
+        </div>
+        <span class="appointment-status"></span>
+      </div>
+      
+      <dl class="appointment-details"></dl>
+      <div class="appointment-actions"></div>
+    </article>
+  </template>
+</body>
+</html>

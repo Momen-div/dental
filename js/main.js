@@ -41,8 +41,9 @@ function renderServices() {
 
   servicesGrid.replaceChildren();
 
-  clinicConfig.services.forEach((service) => {
-    const serviceKey = `service${capitalize(service.id)}`;
+  clinicConfig.booking.services.forEach((serviceId) => {
+    const service = clinicConfig.services[serviceId];
+    const serviceKey = `service${capitalize(serviceId)}`;
     const card = document.createElement("article");
     card.className = "service-card";
     card.dataset.reveal = "";
@@ -88,8 +89,8 @@ function renderSelectOptions() {
     const selectedService = serviceSelect.value;
     serviceSelect.replaceChildren(new Option(text("chooseService"), ""));
 
-    clinicConfig.services.forEach(({ id }) => {
-      serviceSelect.add(new Option(currentTranslations.serviceNames[id], id));
+    clinicConfig.booking.services.forEach((serviceId) => {
+      serviceSelect.add(new Option(currentTranslations.serviceNames[serviceId], serviceId));
     });
 
     serviceSelect.value = selectedService;
