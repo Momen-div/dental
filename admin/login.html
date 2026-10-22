@@ -22,7 +22,10 @@
         <label for="username" data-copy="username">اسم المستخدم أو البريد الإلكتروني</label>
         <input id="username" name="username" type="text" autocomplete="username" maxlength="254" required>
         <label for="password" data-copy="password">كلمة المرور</label>
-        <input id="password" name="password" type="password" autocomplete="current-password" maxlength="128" required>
+        <div class="admin-password-field">
+          <input id="password" name="password" type="password" autocomplete="current-password" maxlength="128" required>
+          <button class="admin-password-toggle" id="password-toggle" type="button" aria-controls="password" aria-pressed="false" data-show-password>إظهار</button>
+        </div>
         <p class="admin-message" id="login-message" role="alert" aria-live="polite"></p>
         <button class="admin-primary" type="submit" data-copy="signIn">تسجيل الدخول</button>
       </form>

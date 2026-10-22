@@ -3,7 +3,7 @@
     ar: {
       backSite: "العودة إلى الموقع", clinicAdmin: "إدارة العيادة", loginTitle: "دخول المسؤول",
       loginHint: "سجّل الدخول للوصول إلى طلبات المواعيد.", username: "اسم المستخدم أو البريد الإلكتروني",
-      password: "كلمة المرور", signIn: "تسجيل الدخول", privateNotice: "هذه المساحة مخصصة لموظفي العيادة المصرح لهم.",
+      password: "كلمة المرور", showPassword: "إظهار", hidePassword: "إخفاء", signIn: "تسجيل الدخول", privateNotice: "هذه المساحة مخصصة لموظفي العيادة المصرح لهم.",
       appointmentsTitle: "المواعيد", logout: "تسجيل الخروج", dashboardEyebrow: "تنسيق رعاية المرضى",
       refresh: "تحديث القائمة", filterTitle: "البحث والتصفية", search: "بحث بالاسم أو الهاتف أو البريد",
       date: "التاريخ", service: "الخدمة", status: "الحالة", allServices: "كل الخدمات", allStatuses: "كل الحالات",
@@ -20,7 +20,7 @@
     en: {
       backSite: "Back to website", clinicAdmin: "Clinic administration", loginTitle: "Administrator sign in",
       loginHint: "Sign in to access appointment requests.", username: "Username or email address", password: "Password",
-      signIn: "Sign in", privateNotice: "This area is for authorized clinic staff only.", appointmentsTitle: "Appointments",
+      showPassword: "Show", hidePassword: "Hide", signIn: "Sign in", privateNotice: "This area is for authorized clinic staff only.", appointmentsTitle: "Appointments",
       logout: "Log out", dashboardEyebrow: "Patient care coordination", refresh: "Refresh list", filterTitle: "Search and filter",
       search: "Search name, phone, or email", date: "Date", service: "Service", status: "Status", allServices: "All services",
       allStatuses: "All statuses", pending: "Pending", confirmed: "Confirmed", cancelled: "Cancelled", applyFilters: "Apply",
@@ -58,6 +58,7 @@
       button.textContent = language === "ar" ? "English" : "العربية";
       button.setAttribute("aria-label", language === "ar" ? "Switch to English" : "التبديل إلى العربية");
     });
+    updatePasswordToggle();
     document.title = document.body.dataset.page === "login" ? `${t("loginTitle")} | ${t("clinicAdmin")}` : `${t("appointmentsTitle")} | ${t("clinicAdmin")}`;
   }
 
@@ -81,9 +82,27 @@
     element.dataset.kind = kind;
   }
 
+  function updatePasswordToggle() {
+    const password = document.querySelector("#password");
+    const toggle = document.querySelector("#password-toggle");
+    if (!password || !toggle) return;
+
+    const isVisible = password.type === "text";
+    const label = isVisible ? t("hidePassword") : t("showPassword");
+    toggle.textContent = label;
+    toggle.setAttribute("aria-label", label);
+    toggle.setAttribute("aria-pressed", String(isVisible));
+  }
+
   function onLogin() {
     const form = document.querySelector("#login-form");
     const message = document.querySelector("#login-message");
+    const password = form.elements.password;
+    document.querySelector("#password-toggle").addEventListener("click", () => {
+      password.type = password.type === "password" ? "text" : "password";
+      updatePasswordToggle();
+      password.focus();
+    });
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
       const button = form.querySelector("button[type=submit]");
