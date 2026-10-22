@@ -70,23 +70,6 @@ function validateBooking(form, config, text) {
   return isValid;
 }
 
-function validateContact(form, text) {
-  let isValid = validateRequiredFields(form, text);
-  const contactMethod = form.querySelector("#contact-method");
-  const value = contactMethod.value.trim();
-
-  if (
-    value
-    && !globalThis.DentalBookingRules.isValidEmail(value)
-    && !globalThis.DentalBookingRules.isValidPhone(value)
-  ) {
-    showFieldError(contactMethod, text("invalidContact"));
-    isValid = false;
-  }
-
-  return isValid;
-}
-
 function clearFormErrors(form) {
   form.querySelectorAll(".field-error").forEach((error) => {
     error.textContent = "";
@@ -233,7 +216,6 @@ function handleFormSubmit(event, config, text) {
   event.preventDefault();
 
   const form = event.currentTarget;
-  const formType = form.dataset.formType;
   const status = form.querySelector(".form-status");
 
   if (!status) return;
@@ -242,30 +224,20 @@ function handleFormSubmit(event, config, text) {
   status.textContent = "";
   status.classList.remove("is-error");
 
-  const isValid = formType === "booking"
-    ? validateBooking(form, config, text)
-    : validateContact(form, text);
-
-  if (!isValid) {
+  if (!validateBooking(form, config, text)) {
     status.textContent = text("errorSummary");
     status.classList.add("is-error");
     form.querySelector('[aria-invalid="true"]')?.focus();
     return;
   }
 
-  if (formType === "booking") {
-    submitBooking(form, status, text);
-    return;
-  }
-
-  // The contact form remains a frontend-only demo for now.
-  status.textContent = text("contactSuccess");
+  submitBooking(form, status, text);
 }
 
 
 /** Clears previous messages after the display language changes. */
 export function clearFormFeedback() {
-  document.querySelectorAll("[data-form-type]").forEach((form) => {
+  document.querySelectorAll("#booking-form").forEach((form) => {
     clearFormErrors(form);
     const status = form.querySelector(".form-status");
     if (!status) return;
@@ -275,17 +247,15 @@ export function clearFormFeedback() {
   });
 }
 
-/** Sets up validation and feedback for booking and contact forms. */
+/** Sets up validation and feedback for the appointment booking form. */
 export function initializeForms(config, text) {
   setDateMinimum(document.querySelector("#booking-date"));
 
-  document.querySelectorAll("[data-form-type]").forEach((form) => {
+  document.querySelectorAll("#booking-form").forEach((form) => {
     form.addEventListener("submit", (event) => handleFormSubmit(event, config, text));
   });
 
-  document.querySelectorAll(
-    "#booking-form input, #booking-form select, #booking-form textarea, #contact-form input, #contact-form textarea"
-  ).forEach((field) => {
+  document.querySelectorAll("#booking-form input, #booking-form select, #booking-form textarea").forEach((field) => {
     field.addEventListener("input", () => clearFieldError(field));
     field.addEventListener("change", () => clearFieldError(field));
   });

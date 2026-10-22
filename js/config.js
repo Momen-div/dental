@@ -18,6 +18,10 @@ const clinicConfig = {
     }
   },
   mapEmbedUrl: "https://www.google.com/maps?q=Amman%2C%20Jordan&output=embed", // Demonstration only; replace with the actual clinic map.
+  // Add only manually verified Google review excerpts and the clinic's real Maps listing URL.
+  googleReviewsUrl: "",
+  // Entry shape: { author: "", text: "", rating: 1-5, date: "YYYY-MM-DD" }.
+  googleReviews: [],
   images: {
     hero: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1600&q=90",
     gallery: [
@@ -30,7 +34,7 @@ const clinicConfig = {
     ]
   },
   dentist: {
-    name: { ar: "اسم طبيب/ة الأسنان", en: "Dentist name" },
+    name: { ar: "اسم طبيب الأسنان", en: "Dentist name" },
     title: { ar: "التخصص والمؤهلات المعتمدة", en: "Verified specialty and qualifications" },
     bio: {
       ar: "أضف نبذة تعريفية معتمدة عن الطبيب/ة ونهجه/ا في رعاية المرضى.",

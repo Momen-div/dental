@@ -837,34 +837,122 @@ html[dir="ltr"] .hero-visual::after {
   font-size: 10px;
 }
 
-.message-section {
-  display: grid;
-  grid-template-columns: .7fr 1.3fr;
-  gap: 70px;
+.reviews-section {
   max-width: var(--page-width);
   margin: auto;
   padding: 96px var(--space-4);
 }
 
-.message-intro h2 {
-  font-size: 35px;
+.reviews-section .section-heading {
+  margin-inline: auto;
+  text-align: center;
 }
 
-.message-intro > p:last-child {
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.review-card {
+  display: grid;
+  align-content: start;
+  min-width: 0;
+  min-height: 230px;
+  padding: 25px;
+  border: 1px solid var(--color-border);
+  border-block-start: 3px solid var(--color-gold);
+  background: var(--color-white);
+  box-shadow: var(--shadow-card);
+}
+
+.review-stars {
+  color: var(--color-gold-dark);
+  font-size: 19px;
+  letter-spacing: 3px;
+  line-height: 1;
+}
+
+.review-quote {
+  margin: 18px 0 24px;
+  color: var(--color-navy);
+  font-size: 14px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+
+.review-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-block-start: auto;
+  padding-block-start: 14px;
+  border-block-start: 1px solid var(--color-border);
+  color: var(--color-muted);
+  font-size: 11px;
+}
+
+.review-author {
+  color: var(--color-navy);
+  font-weight: 700;
+}
+
+.review-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.google-mark {
+  color: #4285f4;
+  font: 700 15px Arial, sans-serif;
+}
+
+.reviews-empty {
+  max-width: 690px;
+  margin: 0 auto;
+  padding: 32px;
+  border: 1px dashed #cfc7b8;
+  background: #fbfaf7;
+  text-align: center;
+}
+
+.reviews-empty[hidden],
+.reviews-link[hidden] {
+  display: none;
+}
+
+.reviews-empty-mark {
+  display: block;
+  height: 42px;
+  color: var(--color-gold-dark);
+  font: 64px/1 Georgia, serif;
+}
+
+.reviews-empty h3 {
+  margin: 13px 0 8px;
+  color: var(--color-navy);
+  font-size: 17px;
+}
+
+.reviews-empty p {
+  max-width: 540px;
+  margin: auto;
   color: var(--color-muted);
   font-size: 13px;
+  line-height: 1.9;
 }
 
-.message-form {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px 18px;
-}
-
-.message-form .field:nth-of-type(4),
-.message-form .form-status,
-.message-form .button {
-  grid-column: 1 / -1;
+.reviews-link {
+  display: flex;
+  width: fit-content;
+  gap: 10px;
+  margin: 30px auto 0;
 }
 
 /* Footer */

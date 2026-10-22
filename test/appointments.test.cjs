@@ -393,14 +393,23 @@ test("database cannot be configured in public assets or other project files", ()
   }
 });
 
-test("booking copy describes submission; contact form remains demo-only", async () => {
+test("booking remains available and reviews never imply unverified Google data", async () => {
   const html = fs.readFileSync(path.resolve(__dirname, "../index.html"), "utf8");
   const translations = fs.readFileSync(path.resolve(__dirname, "../js/translations.js"), "utf8");
+  const config = fs.readFileSync(path.resolve(__dirname, "../js/config.js"), "utf8");
 
   assert.match(html, /data-i18n="bookingText">\s*يمكنك إرسال طلب بموعد مفضل/);
-  assert.match(html, /data-i18n="contactPrivacy">/);
+  assert.match(html, /id="booking-form"[^>]*data-form-type="booking"/);
+  assert.match(html, /id="reviews"[^>]*aria-labelledby="reviews-title"/);
+  assert.match(html, /data-i18n="reviewsTitle">آراء مرضانا/);
+  assert.match(html, /id="google-reviews-link"[^>]*hidden/);
+  assert.doesNotMatch(html, /id="contact-form"|data-form-type="contact"|كيف يمكننا مساعدتك/);
+  assert.match(config, /googleReviewsUrl:\s*""/);
+  assert.match(config, /googleReviews:\s*\[\]/);
+  assert.match(translations, /Only review text verified and added by the clinic is shown here/);
+  assert.match(translations, /No verified reviews or Google Maps link have been provided yet/);
+  assert.match(translations, /لن نعرض أسماء أو تقييمات أو أرقاماً غير مؤكدة/);
   assert.match(translations, /Your information will be sent to the server/);
-  assert.match(translations, /this message will not be sent or received by the clinic/);
   assert.doesNotMatch(translations, /will contact you to check availability|followed up directly by the clinic team/i);
   assert.doesNotMatch(translations, /ستتواصل معك العيادة|متابعة مباشرة من فريق العيادة/);
   assert.doesNotMatch(html, /هذا نموذج تجريبي فقط؛ لا يتم حفظ الطلب/);

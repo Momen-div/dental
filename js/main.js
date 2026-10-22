@@ -4,6 +4,7 @@ import { createLanguageController } from "./language.js";
 import { initializeNavigation } from "./navigation.js";
 import { initializeGallery, initializeImageFallbacks } from "./gallery.js";
 import { clearFormFeedback, initializeForms } from "./forms.js";
+import { renderGoogleReviews } from "./reviews.js";
 
 const language = createLanguageController(clinicConfig, translations);
 const text = language.text;
@@ -174,6 +175,7 @@ function applyPageLanguage(selectedLanguage) {
   renderServices();
   renderContactDetails();
   renderSocialLinks();
+  renderGoogleReviews(clinicConfig, text, language.getCurrentLanguage());
   renderSelectOptions();
   clearFormFeedback();
 }

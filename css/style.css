@@ -108,8 +108,7 @@ a {
 
 .section-heading h2,
 .doctor-content h2,
-.booking-intro h2,
-.message-intro h2 {
+.booking-intro h2 {
   margin: 0 0 15px;
   color: var(--color-navy);
   font-family: var(--font-ar);
@@ -121,7 +120,6 @@ a {
 html[lang="en"] .section-heading h2,
 html[lang="en"] .doctor-content h2,
 html[lang="en"] .booking-intro h2,
-html[lang="en"] .message-intro h2,
 html[lang="en"] .hero h1 {
   font-family: var(--font-display-en);
   font-weight: 500;

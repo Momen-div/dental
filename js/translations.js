@@ -124,7 +124,7 @@ const translations = {
     bookingFailed:
       "تعذّر إرسال طلب الموعد حالياً. حاول مرة أخرى لاحقاً.",
 
-    // Contact form remains a frontend-only demo
+    // Contact details
     contactEyebrow: "نحن هنا للمساعدة",
     contactTitle: "تواصل مع العيادة",
     contactText:
@@ -141,18 +141,20 @@ const translations = {
     mapNotice:
       "موقع تجريبي في عمّان — استبدل الرابط بعنوان العيادة الحقيقي.",
 
-    messageEyebrow: "أرسل استفسارك",
-    messageTitle: "كيف يمكننا مساعدتك؟",
-    contactName: "الاسم",
-    contactMethod: "البريد الإلكتروني أو الهاتف",
-    subject: "الموضوع",
-    message: "رسالتك",
-    submitMessage: "معاينة الرسالة",
-
-    contactPrivacy:
-      "نموذج توضيحي فقط: لن تُرسل رسالتك ولن تصل إلى العيادة في هذه النسخة.",
-    contactSuccess:
-      "اكتمل التحقق من النموذج محلياً فقط. لم تُرسل الرسالة أو تُستلم من العيادة.",
+    reviewsEyebrow: "تجارب من Google",
+    reviewsTitle: "آراء مرضانا",
+    reviewsIntro:
+      "تعرف على ما يشاركه المرضى على Google. لا نعرض إلا نصوص التقييمات الموثقة التي أضافتها العيادة.",
+    reviewsEmptyTitle: "لا توجد تقييمات مضافة للعرض حالياً",
+    reviewsEmptyText:
+      "ستظهر هنا مقتطفات التقييمات التي تتحقق منها العيادة. يمكنك قراءة جميع التقييمات على Google Maps عند إضافة رابط الملف الصحيح.",
+    reviewsSetupTitle: "التقييمات الموثقة قيد الإعداد",
+    reviewsSetupText:
+      "لم تتم إضافة تقييمات أو رابط Google Maps موثّق بعد. لن نعرض أسماء أو تقييمات أو أرقاماً غير مؤكدة.",
+    reviewsLink: "اقرأ جميع التقييمات على Google Maps",
+    reviewRating: "التقييم: {rating} من 5 نجوم",
+    reviewDate: "تاريخ التقييم",
+    googleAttribution: "تقييم منشور على Google",
 
     // Validation messages
     required: "هذا الحقل مطلوب.",
@@ -165,7 +167,6 @@ const translations = {
     invalidTime: "اختر وقتاً من الخيارات المتاحة.",
     messageTooLong: "يجب ألا تتجاوز الرسالة ٥٠٠ حرف.",
     invalidMessage: "أدخل رسالة نصية صالحة.",
-    invalidContact: "أدخل بريداً إلكترونياً أو رقم هاتف صالحاً.",
     errorSummary: "يرجى مراجعة الحقول الموضحة.",
 
     footerLine: "نموذج موقع قابل للتخصيص لعيادة الأسنان.",
@@ -318,7 +319,7 @@ const translations = {
     bookingFailed:
       "Unable to submit your appointment request right now. Please try again later.",
 
-    // Contact form remains a frontend-only demo
+    // Contact details
     contactEyebrow: "We're here to help",
     contactTitle: "Contact the clinic",
     contactText:
@@ -335,18 +336,20 @@ const translations = {
     mapNotice:
       "Demo location in Amman — replace with the real clinic map URL.",
 
-    messageEyebrow: "Send an enquiry",
-    messageTitle: "How can we help?",
-    contactName: "Name",
-    contactMethod: "Email or phone",
-    subject: "Subject",
-    message: "Your message",
-    submitMessage: "Preview message",
-
-    contactPrivacy:
-      "Demonstration only: this message will not be sent or received by the clinic.",
-    contactSuccess:
-      "Local form validation passed only. The message was not sent or received by the clinic.",
+    reviewsEyebrow: "Patient experiences on Google",
+    reviewsTitle: "What Our Patients Say",
+    reviewsIntro:
+      "See what patients share on Google. Only review text verified and added by the clinic is shown here.",
+    reviewsEmptyTitle: "No reviews have been added here yet",
+    reviewsEmptyText:
+      "Clinic-verified review excerpts will appear here. Read all reviews on Google Maps once the correct listing link is added.",
+    reviewsSetupTitle: "Verified reviews are being prepared",
+    reviewsSetupText:
+      "No verified reviews or Google Maps link have been provided yet. We will not display unconfirmed names, ratings, or counts.",
+    reviewsLink: "Read all reviews on Google Maps",
+    reviewRating: "Rated {rating} out of 5 stars",
+    reviewDate: "Review date",
+    googleAttribution: "Review posted on Google",
 
     // Validation messages
     required: "This field is required.",
@@ -359,7 +362,6 @@ const translations = {
     invalidTime: "Choose a time from the available options.",
     messageTooLong: "Message must be 500 characters or fewer.",
     invalidMessage: "Enter a valid text message.",
-    invalidContact: "Enter a valid email address or phone number.",
     errorSummary: "Please review the highlighted fields.",
 
     footerLine: "A customizable dental clinic website template.",

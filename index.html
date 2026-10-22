@@ -110,7 +110,7 @@
       </div>
       <div class="doctor-nameplate">
         <span class="nameplate-label" data-i18n="doctorEyebrow">تعرّف على طبيب الأسنان</span>
-        <strong id="dentist-name" data-config="dentist-name">اسم طبيب/ة الأسنان</strong>
+        <strong id="dentist-name" data-config="dentist-name">اسم طبيب الأسنان</strong>
       </div>
     </section>
 
@@ -321,36 +321,22 @@
       </div>
     </section>
 
-    <section class="message-section" aria-labelledby="message-title">
-      <div class="message-intro">
-        <p class="eyebrow" data-i18n="messageEyebrow">أرسل استفسارك</p>
-        <h2 id="message-title" data-i18n="messageTitle">كيف يمكننا مساعدتك؟</h2>
-        <p data-i18n="contactPrivacy">نموذج توضيحي فقط: لن تُرسل رسالتك ولن تصل إلى العيادة في هذه النسخة.</p>
+    <section class="reviews-section" id="reviews" aria-labelledby="reviews-title">
+      <div class="section-heading">
+        <p class="eyebrow" data-i18n="reviewsEyebrow">تجارب من Google</p>
+        <h2 id="reviews-title" data-i18n="reviewsTitle">آراء مرضانا</h2>
+        <p data-i18n="reviewsIntro">تعرف على ما يشاركه المرضى على Google. لا نعرض إلا نصوص التقييمات الموثقة التي أضافتها العيادة.</p>
       </div>
-      <form id="contact-form" class="message-form" novalidate data-form-type="contact">
-        <div class="field">
-          <label for="contact-name" data-i18n="contactName">الاسم</label>
-          <input id="contact-name" name="name" autocomplete="name" required aria-describedby="contact-name-error">
-          <span class="field-error" id="contact-name-error"></span>
-        </div>
-        <div class="field">
-          <label for="contact-method" data-i18n="contactMethod">البريد الإلكتروني أو الهاتف</label>
-          <input id="contact-method" name="contact" required aria-describedby="contact-method-error">
-          <span class="field-error" id="contact-method-error"></span>
-        </div>
-        <div class="field">
-          <label for="contact-subject" data-i18n="subject">الموضوع</label>
-          <input id="contact-subject" name="subject" required aria-describedby="contact-subject-error">
-          <span class="field-error" id="contact-subject-error"></span>
-        </div>
-        <div class="field">
-          <label for="contact-message" data-i18n="message">رسالتك</label>
-          <textarea id="contact-message" name="message" rows="4" maxlength="1000" required aria-describedby="contact-message-error"></textarea>
-          <span class="field-error" id="contact-message-error"></span>
-        </div>
-        <p class="form-status" id="contact-status" role="status" aria-live="polite"></p>
-        <button class="button button-navy" type="submit" data-i18n="submitMessage">معاينة الرسالة</button>
-      </form>
+      <div class="reviews-grid" id="google-reviews" aria-live="polite"></div>
+      <div class="reviews-empty" id="reviews-empty" role="status" hidden>
+        <span class="reviews-empty-mark" aria-hidden="true">“</span>
+        <h3 id="reviews-empty-title"></h3>
+        <p id="reviews-empty-text"></p>
+      </div>
+      <a class="button button-navy reviews-link" id="google-reviews-link" href="#reviews" target="_blank" rel="noopener noreferrer" hidden>
+        <span data-i18n="reviewsLink">اقرأ جميع التقييمات على Google Maps</span>
+        <span aria-hidden="true">↗</span>
+      </a>
     </section>
   </main>
 

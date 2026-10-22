@@ -23,7 +23,7 @@
   }
 
   .booking-section,
-  .message-section {
+  .reviews-section {
     gap: 36px;
   }
 }
@@ -157,10 +157,12 @@
     grid-template-columns: 1fr;
   }
 
-  .message-section {
-    grid-template-columns: 1fr;
-    gap: 28px;
+  .reviews-section {
     padding: 72px 22px;
+  }
+
+  .reviews-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .footer-main {
@@ -269,18 +271,28 @@
     padding: 20px 16px;
   }
 
-  .form-grid,
-  .message-form {
+  .form-grid {
     grid-template-columns: 1fr;
   }
 
-  .field-full,
-  .message-form .field:nth-of-type(4) {
+  .field-full {
     grid-column: auto;
   }
 
   .contact-details {
     grid-template-columns: 1fr;
+  }
+
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .review-card {
+    min-height: 0;
+  }
+
+  .reviews-empty {
+    padding: 26px 18px;
   }
 
   .map-wrap,
