@@ -276,7 +276,7 @@ test("administrator authentication, authorization, CSRF, lifecycle, and backups"
 
   const productionCheck = spawnSync(process.execPath, ["-e", "const app=require('./server/app'); console.log(JSON.stringify(app.locals.sessionCookie)); require('./server/db/database').close()"], {
     cwd: projectRoot,
-    env: { ...process.env, APPOINTMENTS_DB_PATH: databasePath, NODE_ENV: "production", SESSION_SECRET: "production-test-secret-with-at-least-32-bytes", TRUST_PROXY: "loopback" },
+    env: { ...process.env, APPOINTMENTS_DB_PATH: databasePath, NODE_ENV: "production", SESSION_SECRET: "production-test-secret-with-at-least-32-bytes", TRUST_PROXY: "1" },
     encoding: "utf8",
   });
   assert.equal(productionCheck.status, 0, productionCheck.stderr);
@@ -314,4 +314,94 @@ test("production refuses an absent or weak session secret before serving", () =>
   });
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /SESSION_SECRET must contain at least 32 bytes/);
+});
+
+test("production HTTPS enforcement honors one trusted proxy hop", async () => {
+  const script = `
+    const app = require('./server/app');
+    const db = require('./server/db/database');
+    const server = app.listen(0, '127.0.0.1', async () => {
+      try {
+        const origin = 'http://127.0.0.1:' + server.address().port;
+        const plain = await fetch(origin + '/admin/login');
+        const forwarded = await fetch(origin + '/admin/login', { headers: { 'x-forwarded-proto': 'https' } });
+        console.log(JSON.stringify({ plain: plain.status, forwarded: forwarded.status, hsts: forwarded.headers.get('strict-transport-security') }));
+      } catch (error) {
+        console.error(error.message);
+        process.exitCode = 1;
+      } finally {
+        server.close(() => db.close());
+      }
+    });
+  `;
+  const result = spawnSync(process.execPath, ["-e", script], {
+    cwd: projectRoot,
+    env: {
+      ...process.env,
+      APPOINTMENTS_DB_PATH: path.join(testDirectory, "https-check.sqlite"),
+      NODE_ENV: "production",
+      SESSION_SECRET: "production-test-secret-with-at-least-32-bytes",
+      TRUST_PROXY: "1",
+    },
+    encoding: "utf8",
+  });
+  assert.equal(result.status, 0, result.stderr);
+  const response = JSON.parse(result.stdout.trim().split("\n").at(-1));
+  assert.equal(response.plain, 426);
+  assert.equal(response.forwarded, 200);
+  assert.equal(response.hsts, "max-age=31536000");
+});
+
+test("production rejects invalid TRUST_PROXY values", () => {
+  const result = spawnSync(process.execPath, ["-e", "require('./server/app')"], {
+    cwd: projectRoot,
+    env: {
+      ...process.env,
+      APPOINTMENTS_DB_PATH: path.join(testDirectory, "invalid-proxy.sqlite"),
+      NODE_ENV: "production",
+      SESSION_SECRET: "production-test-secret-with-at-least-32-bytes",
+      TRUST_PROXY: "loopback",
+    },
+    encoding: "utf8",
+  });
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /TRUST_PROXY must be a non-negative integer/);
+});
+
+test("administrator provisioning refuses overwrite and reset invalidates sessions", async () => {
+  const isolatedDatabasePath = path.join(testDirectory, "provisioning-check.sqlite");
+  const script = `
+    (async () => {
+      const db = require('./server/db/database');
+      const { createAdministrator, resetAdministrator } = require('./server/auth/admin-provisioning');
+      const { verifyPassword } = require('./server/auth/security');
+      const firstPassword = 'Synthetic-Clinic-Password-42!';
+      const replacementPassword = 'Replacement-Clinic-Password-43!';
+      await createAdministrator(' synthetic-owner ', firstPassword);
+      const originalHash = db.prepare('SELECT password_hash FROM administrators').get().password_hash;
+      let refused = false;
+      try { await createAdministrator('another-owner', replacementPassword); } catch { refused = true; }
+      const unchanged = db.prepare('SELECT password_hash FROM administrators').get().password_hash === originalHash;
+      db.prepare('INSERT INTO sessions (sid, sess, expires_at) VALUES (?, ?, ?)').run('synthetic-session', '{}', Date.now() + 60000);
+      await resetAdministrator('SYNTHETIC-OWNER', replacementPassword);
+      const remainingSessions = db.prepare('SELECT COUNT(*) AS count FROM sessions').get().count;
+      const currentHash = db.prepare('SELECT password_hash FROM administrators').get().password_hash;
+      console.log(JSON.stringify({ refused, unchanged, remainingSessions, oldPasswordWorks: await verifyPassword(firstPassword, currentHash), newPasswordWorks: await verifyPassword(replacementPassword, currentHash) }));
+      db.close();
+    })().catch((error) => { console.error(error.message); process.exitCode = 1; });
+  `;
+  const result = spawnSync(process.execPath, ["-e", script], {
+    cwd: projectRoot,
+    env: { ...process.env, APPOINTMENTS_DB_PATH: isolatedDatabasePath },
+    encoding: "utf8",
+  });
+  assert.equal(result.status, 0, result.stderr);
+  const outcome = JSON.parse(result.stdout.trim().split("\n").at(-1));
+  assert.deepEqual(outcome, {
+    refused: true,
+    unchanged: true,
+    remainingSessions: 0,
+    oldPasswordWorks: false,
+    newPasswordWorks: true,
+  });
 });

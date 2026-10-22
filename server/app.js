@@ -29,11 +29,6 @@ if (process.env.TRUST_PROXY) {
 const PORT = process.env.PORT || 3000;
 const projectRoot = path.join(__dirname, "..");
 
-console.log("Proxy config:", {
-  trustProxy: app.get("trust proxy"),
-  nodeEnv: process.env.NODE_ENV,
-});
-
 if (process.env.NODE_ENV === "production") {
   if (
     !process.env.SESSION_SECRET ||
@@ -65,12 +60,6 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  console.log("HTTPS diagnostic:", {
-    secure: req.secure,
-    protocol: req.protocol,
-    forwardedProto: req.get("x-forwarded-proto"),
-  });
-
   if (
     process.env.NODE_ENV === "production" &&
     !req.secure &&

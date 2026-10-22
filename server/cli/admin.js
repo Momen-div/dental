@@ -1,6 +1,7 @@
 const readline = require("node:readline");
 const db = require("../db/database");
-const { normalizeUsername, hashPassword } = require("../auth/security");
+const { normalizeUsername } = require("../auth/security");
+const { createAdministrator, resetAdministrator } = require("../auth/admin-provisioning");
 
 function argument(name) {
   const position = process.argv.indexOf(name);
@@ -52,22 +53,11 @@ async function main() {
   const first = await readSecret("New password (hidden): ");
   const second = await readSecret("Repeat password (hidden): ");
   if (first !== second) throw new Error("The passwords did not match.");
-  const passwordHash = await hashPassword(first);
-
   if (command === "create") {
-    const create = db.transaction(() => {
-      if (db.prepare("SELECT COUNT(*) AS count FROM administrators").get().count !== 0) {
-        throw new Error("An administrator already exists; no account was changed.");
-      }
-      db.prepare("INSERT INTO administrators (username, password_hash) VALUES (?, ?)").run(username, passwordHash);
-    });
-    create.immediate();
+    await createAdministrator(username, first);
     console.log("Initial administrator created. Keep the username private and store the password in an approved password manager.");
   } else {
-    db.transaction(() => {
-      db.prepare("UPDATE administrators SET password_hash = ?, updated_at = datetime('now') WHERE id = ?").run(passwordHash, current.id);
-      db.prepare("DELETE FROM sessions").run();
-    }).immediate();
+    await resetAdministrator(username, first);
     console.log("Administrator password updated and all existing sessions invalidated.");
   }
   db.close();
